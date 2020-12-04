@@ -1,7 +1,10 @@
 import os
 import re
 
-with open(f"{os.path.dirname(os.path.realpath(__file__))}/input/{os.path.basename(__file__).replace('.py', '.txt')}", "r") as f:
+with open(
+    f"{os.path.dirname(os.path.realpath(__file__))}/input/{os.path.basename(__file__).replace('.py', '.txt')}",
+    "r",
+) as f:
     input_list = list(f.readlines())
 
 fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"]

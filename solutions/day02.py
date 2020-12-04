@@ -1,7 +1,10 @@
 import os
 import re
 
-with open(os.path.dirname(os.path.realpath(__file__)) + "/input/day02.txt", "r") as f:
+with open(
+    f"{os.path.dirname(os.path.realpath(__file__))}/input/{os.path.basename(__file__).replace('.py', '.txt')}",
+    "r",
+) as f:
     rules = list(f.readlines())
 
 pattern = re.compile(r"^(\d+)-(\d+) ([a-z]): ([a-z]+)$")
