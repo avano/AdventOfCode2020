@@ -1,6 +1,9 @@
 import os
 
-with open(os.path.dirname(os.path.realpath(__file__)) + "/input/day01.txt", "r") as f:
+with open(
+    f"{os.path.dirname(os.path.realpath(__file__))}/input/{os.path.basename(__file__).replace('.py', '.txt')}",
+    "r",
+) as f:
     numbers = list(map(int, f.readlines()))
 
 
