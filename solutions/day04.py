@@ -5,29 +5,28 @@ with open(
     f"{os.path.dirname(os.path.realpath(__file__))}/input/{os.path.basename(__file__).replace('.py', '.txt')}",
     "r",
 ) as f:
-    input_list = list(f.readlines())
+    input_list = f.read()
 
-fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"]
 rules = {
-    fields[0]: lambda year: int(year) in range(1920, 2003),
-    fields[1]: lambda year: int(year) in range(2010, 2021),
-    fields[2]: lambda year: int(year) in range(2020, 2031),
-    fields[3]: lambda height: int(height[: height.index("cm")]) in range(150, 194)
+    "byr": lambda year: int(year) in range(1920, 2003),
+    "iyr": lambda year: int(year) in range(2010, 2021),
+    "eyr": lambda year: int(year) in range(2020, 2031),
+    "hgt": lambda height: int(height[: height.index("cm")]) in range(150, 194)
     if "cm" in height
     else int(height[: height.index("in")]) in range(59, 77)
     if "in" in height
     else False,
-    fields[4]: lambda color: bool(re.match(r"#[0-9a-f]{6}", color)),
-    fields[5]: lambda color: color in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"],
-    fields[6]: lambda password_id: len(password_id) == 9 and password_id.isnumeric(),
-    fields[7]: lambda x: False,
+    "hcl": lambda color: bool(re.match(r"#[0-9a-f]{6}", color)),
+    "ecl": lambda color: color in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"],
+    "pid": lambda password_id: len(password_id) == 9 and password_id.isnumeric(),
+    "cid": lambda x: False,
 }
 
 
 def passport_ok(p, part):
     p = p.strip().replace("\n", " ")
 
-    missing_fields = fields.copy()
+    missing_fields = list(rules.keys()).copy()
     for kv in p.split(" "):
         if part == "part1":
             missing_fields.remove(kv.split(":")[0])
@@ -36,19 +35,18 @@ def passport_ok(p, part):
             if rules[key](value):
                 missing_fields.remove(key)
 
-    return len(missing_fields) == 0 or (
+    return not missing_fields or (
         len(missing_fields) == 1 and missing_fields[0] == "cid"
     )
 
 
 def solve(part):
-    passport = ""
     ok_passports = 0
-    for line in input_list:
-        passport += line
-        if line.strip() == "" or line == input_list[-1]:
-            ok_passports += 1 if passport_ok(passport, part) else 0
-            passport = ""
+
+    for passport in input_list.split("\n\n"):
+        if passport_ok(passport, part):
+            ok_passports += 1
+
     return ok_passports
 
 
