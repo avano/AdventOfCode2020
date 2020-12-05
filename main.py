@@ -10,10 +10,7 @@ if __name__ == "__main__":
     else:
         file_count = len(
             glob.glob1(
-                "{}/{}".format(
-                    os.path.dirname(os.path.realpath(__file__)), "solutions"
-                ),
-                "*.py",
+                f"{os.path.dirname(os.path.realpath(__file__))}/solutions", "*.py"
             )
         )
         days = []
@@ -23,3 +20,4 @@ if __name__ == "__main__":
         solution = importlib.import_module("solutions.day{}".format(day))
         print(f"Day {day}: Part 1: {solution.part1()}")
         print(f"Day {day}: Part 2: {solution.part2()}")
+        print("~-~-~-~-~-~-~-~-~-")

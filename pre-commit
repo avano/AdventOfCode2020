@@ -4,5 +4,9 @@ ROOT_DIR="$(git rev-parse --show-toplevel)"
 trap 'popd > /dev/null' EXIT
 
 pushd "${ROOT_DIR}" > /dev/null
-black solutions/*
-git add -A
+while read -r file; do
+	if [[ "${file}" == *.py ]]; then
+		black "${file}"
+		git add "${file}"
+	fi
+done <<< "$(git diff --cached --name-only --diff-filter=ACM)"
