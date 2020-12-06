@@ -11,6 +11,7 @@ def part1():
     count = 0
     for user_group in input_list.split("\n\n"):
         count += len(set(user_group.replace("\n", "")))
+
     return count
 
 
@@ -24,7 +25,8 @@ def part2():
                 if question_answer not in questions_answers:
                     questions_answers[question_answer] = 0
                 questions_answers[question_answer] += 1
-        for data in questions_answers.items():
-            if data[1] == expected_question_answer_count:
+        for value in questions_answers.values():
+            if value == expected_question_answer_count:
                 count += 1
+
     return count
