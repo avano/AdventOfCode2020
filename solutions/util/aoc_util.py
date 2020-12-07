@@ -26,3 +26,11 @@ class Map:
         def __init__(self, x, y):
             self.x = x
             self.y = y
+
+
+class Bag:
+    color = None
+    bags = None
+
+    def __init__(self, color):
+        self.color = color
