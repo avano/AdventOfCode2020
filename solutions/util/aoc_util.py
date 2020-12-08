@@ -29,8 +29,6 @@ class Map:
 
 
 class Bag:
-    color = None
-    bags = None
-
     def __init__(self, color):
         self.color = color
+        self.bags = None

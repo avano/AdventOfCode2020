@@ -1,7 +1,7 @@
 import os
 import re
 
-from util.aoc_util import Bag
+from solutions.util.aoc_util import Bag
 
 with open(
     f"{os.path.dirname(os.path.realpath(__file__))}/input/{os.path.basename(__file__).replace('.py', '.txt')}",
@@ -18,24 +18,31 @@ def parse_bags():
     for line in input_list:
         regex_search = re.search(regex_bag, line)
         color, inside_bags = regex_search.group(1), regex_search.group(2)
-        bag = get_bag(bags, color)
+
+        bag = get_or_create_bag(bags, color)
+
         if inside_bags != "no other bags":
             current_bags = {}
+
             for inside_bag in inside_bags.split(", "):
                 regex_search = re.search(regex_inside_bags, inside_bag)
-                quantity, color = regex_search.group(1), regex_search.group(2)
-                current_bags[get_bag(bags, color)] = quantity
+                quantity, color = int(regex_search.group(1)), regex_search.group(2)
+
+                current_bags[get_or_create_bag(bags, color)] = quantity
+
             bag.bags = current_bags
+
     return bags
 
 
-def get_bag(bags, color):
-    for bag in bags:
-        if bag.color == color:
-            return bag
-    new_bag = Bag(color)
-    bags.append(new_bag)
-    return new_bag
+def get_or_create_bag(bags, color):
+    bag = next((bag for bag in bags if bag.color == color), None)
+
+    if not bag:
+        bag = Bag(color)
+        bags.append(bag)
+
+    return bag
 
 
 def search_bag(where, what):
@@ -47,6 +54,7 @@ def search_bag(where, what):
         for bag in where.bags:
             if search_bag(bag, what):
                 return True
+
     return False
 
 
@@ -57,14 +65,15 @@ def count_bags(where):
     else:
         for bag, quantity in where.bags.items():
             bag_size = 1 + count_bags(bag)
-            count += int(quantity) * bag_size
+            count += quantity * bag_size
+
         return count
 
 
 def part1():
     bags = parse_bags()
     finds = 0
-    shiny_gold = get_bag(bags, "shiny gold")
+    shiny_gold = get_or_create_bag(bags, "shiny gold")
     for bag in bags:
         if search_bag(bag, shiny_gold):
             finds += 1
@@ -73,4 +82,4 @@ def part1():
 
 
 def part2():
-    return count_bags(get_bag(parse_bags(), "shiny gold"))
+    return count_bags(get_or_create_bag(parse_bags(), "shiny gold"))
