@@ -10,14 +10,16 @@ with open(
 
 def run_instructions(instructions_list):
     acc = 0
-    seen_ids = []
+    seen_ids = set()
     i = 0
+
     while True:
         if i in seen_ids:
             return acc, False
         if i == len(instructions_list):
             return acc, True
-        seen_ids.append(i)
+
+        seen_ids.add(i)
         op, value = instructions_list[i].split(" ")
         if op == "acc":
             acc += int(value)
@@ -29,21 +31,19 @@ def part1():
 
 
 def part2():
-    for instruction_list in create_instructions_lists():
+    for instruction_list in generate_instructions_lists():
         acc, ok = run_instructions(instruction_list.split("\n"))
         if ok:
             return acc
 
 
-def create_instructions_lists():
-    instructions_lists = []
-    for instr in ["jmp", "nop"]:
-        for match in re.finditer(instr, inputText):
-            index = match.start()
-            replaced = (
-                inputText[:index]
-                + ("nop" if instr == "jmp" else "jmp")
-                + inputText[index + 3 :]
-            )
-            instructions_lists.append(replaced)
-    return instructions_lists
+def generate_instructions_lists():
+    for match in re.finditer("jmp|nop", inputText):
+        index = match.start()
+        replaced = (
+            inputText[:index]
+            + ("nop" if match.group(0) == "jmp" else "jmp")
+            + inputText[index + 3 :]
+        )
+
+        yield replaced
