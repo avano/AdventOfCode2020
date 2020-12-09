@@ -2,12 +2,8 @@ import os
 
 
 class Map:
-    def __init__(self, file):
-        self.map = []
-
-        with open(file, "r") as f:
-            for l in f.readlines():
-                self.map.append(list(l.strip()))
+    def __init__(self, puzzle_input):
+        self.map = [list(line.strip()) for line in puzzle_input]
 
     def get_map(self):
         return self.map
@@ -17,10 +13,6 @@ class Map:
 
     def is_tree(self, position):
         return self.map[position.y][position.x] == "#"
-
-    def resize_map(self):
-        for row in self.map:
-            row.extend(row)
 
     class Coordinate:
         def __init__(self, x, y):
