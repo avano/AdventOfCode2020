@@ -1,9 +1,10 @@
 import os
 
 
-def puzzle_input(f):
-    global puzzle_input
-    puzzle_input = f.readlines()
+def solve(f):
+    data = f.readlines()
+
+    return part1(data), part2(data)
 
 
 def find_in_range(min_range, max_range, code):
@@ -13,12 +14,13 @@ def find_in_range(min_range, max_range, code):
             max_range -= half_elements
         else:
             min_range += half_elements
+
     return min_range
 
 
-def part1():
+def part1(data):
     max_seat_id = 0
-    for code in puzzle_input:
+    for code in data:
         row = find_in_range(0, 127, code.strip()[:7])
         column = find_in_range(0, 7, code.strip()[-3:])
         seat_id = row * 8 + column
@@ -28,9 +30,9 @@ def part1():
     return max_seat_id
 
 
-def part2():
+def part2(data):
     ids = []
-    for code in puzzle_input:
+    for code in data:
         row = find_in_range(0, 127, code.strip()[:7])
         column = find_in_range(0, 7, code.strip()[-3:])
         ids.append(row * 8 + column)

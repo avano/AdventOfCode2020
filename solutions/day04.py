@@ -2,9 +2,10 @@ import os
 import re
 
 
-def puzzle_input(f):
-    global puzzle_input
-    puzzle_input = f.read().strip()
+def solve(f):
+    data = f.read().strip()
+
+    return part1(data), part2(data)
 
 
 rules = {
@@ -40,19 +41,19 @@ def passport_ok(p, part):
     )
 
 
-def solve(part):
+def _solve(data, part):
     ok_passports = 0
 
-    for passport in puzzle_input.split("\n\n"):
+    for passport in data.split("\n\n"):
         if passport_ok(passport, part):
             ok_passports += 1
 
     return ok_passports
 
 
-def part1():
-    return solve("part1")
+def part1(data):
+    return _solve(data, "part1")
 
 
-def part2():
-    return solve("part2")
+def part2(data):
+    return _solve(data, "part2")
