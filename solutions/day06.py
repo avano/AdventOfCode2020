@@ -1,22 +1,23 @@
 import os
 
 
-def puzzle_input(f):
-    global puzzle_input
-    puzzle_input = f.read()
+def solve(f):
+    data = f.read()
+
+    return part1(data), part2(data)
 
 
-def part1():
+def part1(data):
     count = 0
-    for user_group in puzzle_input.split("\n\n"):
+    for user_group in data.split("\n\n"):
         count += len(set(user_group.replace("\n", "")))
 
     return count
 
 
-def part2():
+def part2(data):
     count = 0
-    for user_group in puzzle_input.split("\n\n"):
+    for user_group in data.split("\n\n"):
         expected_question_answer_count = user_group.strip().count("\n") + 1
         questions_answers = {}
         for user_answers in user_group.split("\n"):

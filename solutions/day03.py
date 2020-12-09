@@ -3,13 +3,14 @@ import os
 from solutions.util.aoc_util import Map
 
 
-def puzzle_input(f):
-    global puzzle_input
-    puzzle_input = f.readlines()
+def solve(f):
+    data = f.readlines()
+
+    return part1(data), part2(data)
 
 
-def part1(slope=None):
-    map = Map(puzzle_input)
+def part1(data, slope=None):
+    map = Map(data)
     pos = Map.Coordinate(0, 0)
     slope = slope or Map.Coordinate(3, 1)
     trees = 0
@@ -22,16 +23,16 @@ def part1(slope=None):
     return trees
 
 
-def part2():
+def part2(data):
     slopes = [
         Map.Coordinate(1, 1),
         Map.Coordinate(5, 1),
         Map.Coordinate(7, 1),
         Map.Coordinate(1, 2),
     ]
-    trees = part1()
+    trees = part1(data)
 
     for slope in slopes:
-        trees *= part1(slope)
+        trees *= part1(data, slope)
 
     return trees

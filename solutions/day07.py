@@ -4,19 +4,20 @@ import re
 from solutions.util.aoc_util import Bag
 
 
-def puzzle_input(f):
-    global puzzle_input
-    puzzle_input = f.readlines()
+def solve(f):
+    bags = parse_bags(f.readlines())
+
+    return part1(bags), part2(bags)
 
 
-regex_bag = re.compile(r"^(\w+ \w+).*contain (.*)\.$")
-regex_inside_bags = re.compile(r"^(\d+) (\w+ \w+).*$")
+BAG_PATTERN = re.compile(r"^(\w+ \w+).*contain (.*)\.$")
+INSIDE_BAGS_PATTERN = re.compile(r"^(\d+) (\w+ \w+).*$")
 
 
-def parse_bags():
+def parse_bags(data):
     bags = []
-    for line in puzzle_input:
-        regex_search = re.search(regex_bag, line)
+    for line in data:
+        regex_search = re.search(BAG_PATTERN, line)
         color, inside_bags = regex_search.group(1), regex_search.group(2)
 
         bag = get_or_create_bag(bags, color)
@@ -25,7 +26,7 @@ def parse_bags():
             current_bags = {}
 
             for inside_bag in inside_bags.split(", "):
-                regex_search = re.search(regex_inside_bags, inside_bag)
+                regex_search = re.search(INSIDE_BAGS_PATTERN, inside_bag)
                 quantity, color = int(regex_search.group(1)), regex_search.group(2)
 
                 current_bags[get_or_create_bag(bags, color)] = quantity
@@ -70,8 +71,7 @@ def count_bags(where):
         return count
 
 
-def part1():
-    bags = parse_bags()
+def part1(bags):
     finds = 0
     shiny_gold = get_or_create_bag(bags, "shiny gold")
     for bag in bags:
@@ -81,5 +81,5 @@ def part1():
     return finds
 
 
-def part2():
-    return count_bags(get_or_create_bag(parse_bags(), "shiny gold"))
+def part2(bags):
+    return count_bags(get_or_create_bag(bags, "shiny gold"))

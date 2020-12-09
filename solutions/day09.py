@@ -2,9 +2,11 @@ import os
 import re
 
 
-def puzzle_input(f):
-    global puzzle_input
-    puzzle_input = [int(line) for line in f.readlines()]
+def solve(f):
+    data = [int(line) for line in f.readlines()]
+
+    part1_result = part1(data)
+    return part1_result, part2(data, part1_result)
 
 
 def find_number(lst, num):
@@ -17,27 +19,26 @@ def find_number(lst, num):
     return False
 
 
-def part1():
+def part1(data):
     preamble_size = 25
 
-    for index, value in enumerate(puzzle_input[preamble_size:], preamble_size):
+    for index, value in enumerate(data[preamble_size:], preamble_size):
         start = index - preamble_size
         end = start + preamble_size
-        if not find_number(puzzle_input[start:end], value):
+        if not find_number(data[start:end], value):
             return value
 
 
-def part2():
-    num = part1()
+def part2(data, num):
     last_removed_index = -1
     current_sum = 0
 
-    for index, value in enumerate(puzzle_input):
+    for index, value in enumerate(data):
         current_sum += value
         while current_sum > num:
             last_removed_index += 1
-            current_sum -= puzzle_input[last_removed_index]
+            current_sum -= data[last_removed_index]
         if current_sum == num:
-            sublist = sorted(puzzle_input[last_removed_index + 1 : index + 1])
+            sublist = sorted(data[last_removed_index + 1 : index + 1])
 
             return sublist[0] + sublist[-1]

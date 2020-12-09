@@ -2,9 +2,10 @@ import os
 import re
 
 
-def puzzle_input(f):
-    global puzzle_input
-    puzzle_input = f.read().strip()
+def solve(f):
+    data = f.read().strip()
+
+    return part1(data), part2(data)
 
 
 def run_instructions(instructions_list):
@@ -25,24 +26,24 @@ def run_instructions(instructions_list):
         i += int(value) if op == "jmp" else 1
 
 
-def part1():
-    return run_instructions(puzzle_input.split("\n"))[0]
+def part1(data):
+    return run_instructions(data.split("\n"))[0]
 
 
-def part2():
-    for instruction_list in generate_instructions_lists():
+def part2(data):
+    for instruction_list in generate_instructions_lists(data):
         acc, ok = run_instructions(instruction_list.split("\n"))
         if ok:
             return acc
 
 
-def generate_instructions_lists():
-    for match in re.finditer("jmp|nop", puzzle_input):
+def generate_instructions_lists(data):
+    for match in re.finditer("jmp|nop", data):
         index = match.start()
         replaced = (
-            puzzle_input[:index]
+            data[:index]
             + ("nop" if match.group(0) == "jmp" else "jmp")
-            + puzzle_input[index + 3 :]
+            + data[index + 3 :]
         )
 
         yield replaced

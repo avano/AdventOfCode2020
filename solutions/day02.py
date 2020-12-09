@@ -1,19 +1,20 @@
 import os
 import re
 
-
-def puzzle_input(f):
-    global puzzle_input
-    puzzle_input = f.readlines()
+RULE_PATTERN = re.compile(r"^(\d+)-(\d+) ([a-z]): ([a-z]+)$")
 
 
-pattern = re.compile(r"^(\d+)-(\d+) ([a-z]): ([a-z]+)$")
+def solve(f):
+    data = f.readlines()
+
+    return part1(data), part2(data)
 
 
-def solve(part):
+def _solve(part, rules):
     valid_passwords = 0
-    for rule in puzzle_input:
-        search = re.search(pattern, rule)
+
+    for rule in rules:
+        search = re.search(RULE_PATTERN, rule)
         low, high, char, password = (
             int(search.group(1)),
             int(search.group(2)),
@@ -25,12 +26,13 @@ def solve(part):
         else:
             password = password[low - 1] + password[high - 1]
             valid_passwords += 1 if password.count(char) == 1 else 0
+
     return valid_passwords
 
 
-def part1():
-    return solve("part1")
+def part1(data):
+    return _solve("part1", data)
 
 
-def part2():
-    return solve("part2")
+def part2(data):
+    return _solve("part2", data)
