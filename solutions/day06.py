@@ -1,15 +1,14 @@
 import os
 
-with open(
-    f"{os.path.dirname(os.path.realpath(__file__))}/input/{os.path.basename(__file__).replace('.py', '.txt')}",
-    "r",
-) as f:
-    input_list = f.read()
+
+def puzzle_input(f):
+    global puzzle_input
+    puzzle_input = f.read()
 
 
 def part1():
     count = 0
-    for user_group in input_list.split("\n\n"):
+    for user_group in puzzle_input.split("\n\n"):
         count += len(set(user_group.replace("\n", "")))
 
     return count
@@ -17,7 +16,7 @@ def part1():
 
 def part2():
     count = 0
-    for user_group in input_list.split("\n\n"):
+    for user_group in puzzle_input.split("\n\n"):
         expected_question_answer_count = user_group.strip().count("\n") + 1
         questions_answers = {}
         for user_answers in user_group.split("\n"):

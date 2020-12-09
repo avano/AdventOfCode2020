@@ -3,11 +3,11 @@ import re
 
 from solutions.util.aoc_util import Bag
 
-with open(
-    f"{os.path.dirname(os.path.realpath(__file__))}/input/{os.path.basename(__file__).replace('.py', '.txt')}",
-    "r",
-) as f:
-    input_list = f.readlines()
+
+def puzzle_input(f):
+    global puzzle_input
+    puzzle_input = f.readlines()
+
 
 regex_bag = re.compile(r"^(\w+ \w+).*contain (.*)\.$")
 regex_inside_bags = re.compile(r"^(\d+) (\w+ \w+).*$")
@@ -15,7 +15,7 @@ regex_inside_bags = re.compile(r"^(\d+) (\w+ \w+).*$")
 
 def parse_bags():
     bags = []
-    for line in input_list:
+    for line in puzzle_input:
         regex_search = re.search(regex_bag, line)
         color, inside_bags = regex_search.group(1), regex_search.group(2)
 

@@ -1,11 +1,10 @@
 import os
 import re
 
-with open(
-    f"{os.path.dirname(os.path.realpath(__file__))}/input/{os.path.basename(__file__).replace('.py', '.txt')}",
-    "r",
-) as f:
-    inputText = f.read().strip()
+
+def puzzle_input(f):
+    global puzzle_input
+    puzzle_input = f.read().strip()
 
 
 def run_instructions(instructions_list):
@@ -27,7 +26,7 @@ def run_instructions(instructions_list):
 
 
 def part1():
-    return run_instructions(inputText.split("\n"))[0]
+    return run_instructions(puzzle_input.split("\n"))[0]
 
 
 def part2():
@@ -38,12 +37,12 @@ def part2():
 
 
 def generate_instructions_lists():
-    for match in re.finditer("jmp|nop", inputText):
+    for match in re.finditer("jmp|nop", puzzle_input):
         index = match.start()
         replaced = (
-            inputText[:index]
+            puzzle_input[:index]
             + ("nop" if match.group(0) == "jmp" else "jmp")
-            + inputText[index + 3 :]
+            + puzzle_input[index + 3 :]
         )
 
         yield replaced

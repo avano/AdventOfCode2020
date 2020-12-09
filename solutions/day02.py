@@ -1,18 +1,18 @@
 import os
 import re
 
-with open(
-    f"{os.path.dirname(os.path.realpath(__file__))}/input/{os.path.basename(__file__).replace('.py', '.txt')}",
-    "r",
-) as f:
-    rules = list(f.readlines())
+
+def puzzle_input(f):
+    global puzzle_input
+    puzzle_input = f.readlines()
+
 
 pattern = re.compile(r"^(\d+)-(\d+) ([a-z]): ([a-z]+)$")
 
 
 def solve(part):
     valid_passwords = 0
-    for rule in rules:
+    for rule in puzzle_input:
         search = re.search(pattern, rule)
         low, high, char, password = (
             int(search.group(1)),
