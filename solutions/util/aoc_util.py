@@ -1,6 +1,3 @@
-import os
-
-
 class Map:
     def __init__(self, puzzle_input):
         self.map = [list(line.strip()) for line in puzzle_input]

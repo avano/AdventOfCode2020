@@ -1,4 +1,3 @@
-import os
 import re
 
 RULE_PATTERN = re.compile(r"^(\d+)-(\d+) ([a-z]): ([a-z]+)$")
