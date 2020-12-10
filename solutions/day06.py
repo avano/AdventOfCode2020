@@ -1,6 +1,3 @@
-import os
-
-
 def solve(f):
     data = f.read()
 

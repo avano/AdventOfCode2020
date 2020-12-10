@@ -1,5 +1,3 @@
-import os
-
 from solutions.util.aoc_util import Map
 
 

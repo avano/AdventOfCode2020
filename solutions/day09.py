@@ -1,7 +1,3 @@
-import os
-import re
-
-
 def solve(f):
     data = [int(line) for line in f.readlines()]
 

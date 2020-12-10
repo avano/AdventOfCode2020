@@ -1,4 +1,3 @@
-import os
 import re
 
 from solutions.util.aoc_util import Bag
