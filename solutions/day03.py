@@ -7,26 +7,30 @@ def solve(f):
     return part1(data), part2(data)
 
 
+def is_tree(map_object, coordinate):
+    return map_object.map[coordinate[1]][coordinate[0]] == "#"
+
+
 def part1(data, slope=None):
-    map = Map(data)
-    pos = Map.Coordinate(0, 0)
-    slope = slope or Map.Coordinate(3, 1)
+    map_object = Map(data)
+    pos = (0, 0)
+    slope = slope or (3, 1)
     trees = 0
 
-    while pos.y < len(map.get_map()):
-        if map.is_tree(pos):
+    while pos[1] < len(map_object.get_map()):
+        if is_tree(map_object, pos):
             trees += 1
-        pos.x, pos.y = (pos.x + slope.x) % len(map.get_row(pos.y)), pos.y + slope.y
+        pos = ((pos[0] + slope[0]) % len(map_object.get_row(pos[1])), pos[1] + slope[1])
 
     return trees
 
 
 def part2(data):
     slopes = [
-        Map.Coordinate(1, 1),
-        Map.Coordinate(5, 1),
-        Map.Coordinate(7, 1),
-        Map.Coordinate(1, 2),
+        (1, 1),
+        (5, 1),
+        (7, 1),
+        (1, 2),
     ]
     trees = part1(data)
 

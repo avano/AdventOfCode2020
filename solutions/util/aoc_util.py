@@ -8,13 +8,15 @@ class Map:
     def get_row(self, index):
         return self.map[index]
 
-    def is_tree(self, position):
-        return self.map[position.y][position.x] == "#"
+    def in_range(self, coordinate):
+        return 0 <= coordinate[1] < len(self.map) and 0 <= coordinate[0] < len(
+            self.map[0]
+        )
 
-    class Coordinate:
-        def __init__(self, x, y):
-            self.x = x
-            self.y = y
+    def coordinates(self):
+        for y in range(len(self.map)):
+            for x in range(len(self.map[y])):
+                yield x, y
 
 
 class Bag:
