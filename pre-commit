@@ -6,7 +6,7 @@ trap 'popd > /dev/null' EXIT
 pushd "${ROOT_DIR}" > /dev/null
 while read -r file; do
 	if [[ "${file}" == *.py ]]; then
-		black "${file}"
+		black -l 120 "${file}"
 		git add "${file}"
 	fi
 done <<< "$(git diff --cached --name-only --diff-filter=ACM)"
