@@ -1,5 +1,5 @@
 def solve(f):
-    data = tuple((line[0], int(line[1:])) for line in f.readlines())
+    data = ((line[0], int(line[1:])) for line in f.readlines())
 
     return part1(data), part2(data)
 
@@ -10,11 +10,11 @@ ROTATIONS = ["L", "R"]
 
 
 def add(v1, v2):
-    return tuple(map(lambda x, y: x + y, v1, v2))
+    return (map(lambda x, y: x + y, v1, v2))
 
 
 def mult(vector, value):
-    return tuple((vector[0] * value, vector[1] * value))
+    return ((vector[0] * value, vector[1] * value))
 
 
 def rotate(current_direction, direction, degrees):
