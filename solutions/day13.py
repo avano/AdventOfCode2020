@@ -33,8 +33,15 @@ def extended_euclid(a, b):
     return gcd, x, y
 
 
+def least_common_multiple(*numbers):
+    if len(numbers) == 2:
+        return int(numbers[0] * numbers[1] / math.gcd(numbers[0], numbers[1]))
+    else:
+        return numbers[0] * least_common_multiple(*numbers[1:])
+
+
 def part2(buses):
-    lcm = math.lcm(*filter(lambda x: isinstance(x, int), buses))
+    lcm = least_common_multiple(*filter(lambda x: isinstance(x, int), buses))
 
     result = 0
     for index, bus in enumerate(buses):
